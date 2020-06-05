@@ -1,8 +1,21 @@
+var RunningAnimation;
+
 var BackGroundOpener;
 var BasicMapImage, BasicBridgeImage, DoublePillarImage, DrawBridgeImage, RopeImage, SpikeFloorImage, StepsImage;
-var RunningAnimation;
-var Player1, Player2, Player3, Player4;
+var Player1, Player2, Player3;
+
 var Mapper;
+var form;
+
+var database;
+var dbase;
+
+var Count = 0;
+
+var state = 0;
+var gapFillerX, gapFillerY;
+
+var player;
 
 function preload() {
     BackGroundOpener = loadImage("Images/BackGroundImages/StickRunnerManiaBackgroundComplete.png");
@@ -39,23 +52,30 @@ function shuffle(arra1) {
 
 function setup() {
     createCanvas(800, 600);
-    Player1 = createSprite(100, 75);
+    database = firebase.database();
+    dbase = database.ref('PlayerCount');
+    dbase.on("value", (data) => {
+        Count = data.val();
+    });
+
+    form = new Form();
+    form.display();
+
+    Player1 = createSprite(100, 100);
     Player1.addAnimation("RunCycle1", RunningAnimation);
     Player1.scale = 0.25;
 
-    Player2 = createSprite(100, 225);
+    Player2 = createSprite(100, 300);
     Player2.addAnimation("RunCycle2", RunningAnimation);
     Player2.scale = 0.25;
 
-    Player3 = createSprite(100, 370);
+    Player3 = createSprite(100, 500);
     Player3.addAnimation("RunCycle3", RunningAnimation);
     Player3.scale = 0.25;
 
-    Player4 = createSprite(100, 515);
-    Player4.addAnimation("RunCycle4", RunningAnimation);
-    Player4.scale = 0.25;
-
     frameRate(50);
+
+    player = new Player();
 
     Mapper = new MapGenerator();
     Mapper.Generate();
@@ -63,6 +83,13 @@ function setup() {
 
 function draw() {
     background(255);
-    text("x: "+mouseX+"  y: "+mouseY,mouseX,mouseY);
-    drawSprites();
+    text("x: " + mouseX + "  y: " + mouseY, mouseX, mouseY);
+    Player1.velocityY += 0.8;
+    player.movement();
+
+    if (Count == 3) {
+        drawSprites();
+        form.hideGreetings();
+    }
+
 }
