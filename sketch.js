@@ -12,20 +12,21 @@ var dbase;
 
 var Count = 0;
 
-var state = 0;
-var gapFillerX, gapFillerY;
+var Hurdles;
 
-var player;
+var topHurd;
+var botHurd;
+
+var state = 0;
+var rand = 0;
+
+var Player1, Player2, Player3;
+
+var Ground1, Ground2, Ground3;
 
 function preload() {
-    BackGroundOpener = loadImage("Images/BackGroundImages/StickRunnerManiaBackgroundComplete.png");
-    BasicMapImage = loadImage("Images/Obstacles/Basic Map.png");
-    BasicBridgeImage = loadImage("Images/Obstacles/BasicMapBrigde.png");
-    DoublePillarImage = loadImage("Images/Obstacles/DoublePillar.png");
-    DrawBridgeImage = loadImage("Images/Obstacles/DrawBridge.png");
-    RopeImage = loadImage("Images/Obstacles/RopeObstacle.png");
-    SpikeFloorImage = loadImage("Images/Obstacles/SpikeFloor.png");
-    StepsImage = loadImage("Images/Obstacles/StepsUP&DOWN.png");
+    HurdletopImg = loadImage("Images/Obstacles/Hurdletop.png");
+    HurdleBottomImg = loadImage("Images/Obstacles/Hurdlebottom.png");
 
     RunningAnimation = loadAnimation("Images/Animations/Contact1.png", "Images/Animations/Down.png",
         "Images/Animations/Up.png", "Images/Animations/Up2.png", "Images/Animations/Down2.png",
@@ -61,35 +62,46 @@ function setup() {
     form = new Form();
     form.display();
 
-    Player1 = createSprite(100, 100);
-    Player1.addAnimation("RunCycle1", RunningAnimation);
-    Player1.scale = 0.25;
-
-    Player2 = createSprite(100, 300);
-    Player2.addAnimation("RunCycle2", RunningAnimation);
-    Player2.scale = 0.25;
-
-    Player3 = createSprite(100, 500);
-    Player3.addAnimation("RunCycle3", RunningAnimation);
-    Player3.scale = 0.25;
-
     frameRate(50);
 
-    player = new Player();
+    Player1 = new Player(100, 100);
+    Ground1 = createSprite(300, 150, 800, 20);
+    Player1.player.addAnimation("Runcycle1", RunningAnimation);
+    Player1.player.scale = 0.25;
+
+    Player2 = new Player(100, 300);
+    Ground2 = createSprite(300, 350, 800, 20);
+    Player2.player.addAnimation("Runcycle2", RunningAnimation);
+    Player2.player.scale = 0.25;
+
+    Player3 = new Player(100, 500);
+    Ground3 = createSprite(300, 550, 880, 20);
+    Player3.player.addAnimation("Runcycle3", RunningAnimation);
+    Player3.player.scale = 0.25;
 
     Mapper = new MapGenerator();
-    Mapper.Generate();
+
+    Hurdles = new Group();
+
 }
 
 function draw() {
     background(255);
-    text("x: " + mouseX + "  y: " + mouseY, mouseX, mouseY);
-    Player1.velocityY += 0.8;
-    player.movement();
+    // text("x: " + mouseX + "  y: " + mouseY, mouseX, mouseY);
+    Player1.movement();
+    Player1.player.collide(Ground1);
+
+    Player2.movement();
+    Player2.player.collide(Ground2);
+
+    Player3.movement();
+    Player3.player.collide(Ground3);
 
     if (Count == 3) {
         drawSprites();
         form.hideGreetings();
+        Mapper.Generate();
+        Mapper.CollideHurd()
     }
 
 }

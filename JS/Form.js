@@ -12,7 +12,7 @@ class Form {
     }
 
     display() {
-        background(BackGroundOpener);
+        background(255);
 
         this.title.html("Stick Runner Mania");
         this.title.position(300, 100);
@@ -36,7 +36,7 @@ class Form {
         });
 
         this.ResetButton.mousePressed(() => {
-            player.update(0);
+            Player1.update(0);
         })
     }
 

@@ -1,49 +1,50 @@
 class MapGenerator {
     constructor() {
-        this.basicmap = createSprite(150, 125);
-        this.basicmap.addImage(BasicMapImage);
-        this.basicmap.scale = 0.25;
-        this.basicmap.debug = true;
-
-        this.basicbridge = createSprite(150, 125);
-        this.basicbridge.addImage(BasicBridgeImage);
-        this.basicbridge.scale = 0.25;
-        this.basicbridge.debug = true;
-
-        this.doublepillar = createSprite(150, 105);
-        this.doublepillar.addImage(DoublePillarImage);
-        this.doublepillar.scale = 0.2;
-        this.doublepillar.debug = true;
-
-        this.drawbridge = createSprite(150, 125);
-        this.drawbridge.addImage(DrawBridgeImage);
-        this.drawbridge.scale = 0.25;
-        this.drawbridge.debug = true;
-
-        this.rope = createSprite(150, 75);
-        this.rope.addImage(RopeImage);
-        this.rope.scale = 0.25;
-        this.rope.debug = true;
-
-        this.spike = createSprite(150, 125);
-        this.spike.addImage(SpikeFloorImage);
-        this.spike.scale = 0.25;
-        this.spike.debug = true;
-
-        this.steps = createSprite(150, 125);
-        this.steps.addImage(StepsImage);
-        this.steps.scale = 0.25;
-        this.steps.debug = true;
     }
 
     Generate() {
-        var Pointer = 150;
-        var MapObstacles = [this.basicmap, this.basicbridge, this.doublepillar, this.drawbridge, this.rope, this.spike, this.steps];
-        MapObstacles = shuffle(MapObstacles);
-        for (var i = 0; i < MapObstacles.length; i++) {
-            MapObstacles[i].x = Pointer + (MapObstacles[i].getScaledWidth()) / 2;
-            console.log(MapObstacles[i].x, Pointer);
-            Pointer += MapObstacles[i].getScaledWidth() + 50;
+        if (World.frameCount % 160 === 0) {
+            topHurd = createSprite(Math.round(random(800, 1205)), 315);
+            topHurd.addImage(HurdletopImg);
+            topHurd.scale = 0.15;
+            topHurd.velocityX = -5;
+            Hurdles.add(topHurd);
+
+            botHurd = createSprite(810, 335);
+            botHurd.addImage(HurdleBottomImg);
+            botHurd.scale = 0.15;
+            botHurd.velocityX = -5;
+            botHurd.x = topHurd.x - 10;
+        }
+    }
+
+    CollideHurd() {
+        for (var i = 0; i < Hurdles.length; i++) {
+            if (Player2.collide(topHurd)) {
+                topHurd.velocityX = -2;
+            }
+            if (topHurd.velocityX <= -2) {
+                topHurd.VelocityX += 0.5;
+            }
+            if (topHurd.velocityX >= -5) {
+                topHurd.velocityX = -5;
+            }
         }
     }
 }
+
+/*
+
+Difference between the both hurdles:
+    X --> -10
+    Y --> +20
+
+Template for both hurdles:
+        topHurd = createSprite(400, 300);
+        topHurd.addImage(HurdletopImg);
+        topHurd.scale = 0.15;
+
+        botHurd = createSprite(390, 320);
+        botHurd.addImage(HurdleBottomImg);
+        botHurd.scale = 0.15;
+*/

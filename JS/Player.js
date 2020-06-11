@@ -1,9 +1,10 @@
 class Player {
-    constructor() {
+    constructor(x, y) {
         this.name = null;
         this.index = 0;
         this.y = 0;
         this.rank = 0;
+        this.player = createSprite(x, y);
     }
 
     update(value) {
@@ -13,10 +14,9 @@ class Player {
     }
 
     movement() {
-        // Player1.x += 3;
-        if (keyDown("Space") || keyDown("w") || keyDown(UP_ARROW)) {
-            // Player1.y -= 2.5;
+        this.player.velocityY += 0.8;
+        if (keyDown("space")) {
+            this.player.velocityY = -9;
         }
-        camera.position.x = Player1.x;
     }
-}
+} 
