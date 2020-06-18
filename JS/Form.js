@@ -32,7 +32,7 @@ class Form {
             this.Wait.position(280, 240);
 
             Count = Count + 1;
-            player.update(Count);
+            Player1.update(Count);
         });
 
         this.ResetButton.mousePressed(() => {

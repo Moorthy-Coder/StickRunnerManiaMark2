@@ -64,18 +64,19 @@ function setup() {
 
     frameRate(50);
 
+    AirGround = createSprite(300, -50, 1000, 20)
     Player1 = new Player(100, 100);
-    Ground1 = createSprite(300, 150, 800, 20);
+    Ground1 = createSprite(300, 150, 1000, 20);
     Player1.player.addAnimation("Runcycle1", RunningAnimation);
     Player1.player.scale = 0.25;
 
     Player2 = new Player(100, 300);
-    Ground2 = createSprite(300, 350, 800, 20);
+    Ground2 = createSprite(300, 350, 1000, 20);
     Player2.player.addAnimation("Runcycle2", RunningAnimation);
     Player2.player.scale = 0.25;
 
     Player3 = new Player(100, 500);
-    Ground3 = createSprite(300, 550, 880, 20);
+    Ground3 = createSprite(300, 550, 1000, 20);
     Player3.player.addAnimation("Runcycle3", RunningAnimation);
     Player3.player.scale = 0.25;
 
@@ -89,19 +90,26 @@ function draw() {
     background(255);
     // text("x: " + mouseX + "  y: " + mouseY, mouseX, mouseY);
     Player1.movement();
+    Player1.player.collide(AirGround);    
     Player1.player.collide(Ground1);
 
     Player2.movement();
+    Player2.player.collide(Ground1);
     Player2.player.collide(Ground2);
 
     Player3.movement();
+    Player3.player.collide(Ground2);
     Player3.player.collide(Ground3);
 
     if (Count == 3) {
         drawSprites();
         form.hideGreetings();
         Mapper.Generate();
-        Mapper.CollideHurd()
+        // Mapper.CollideHurd();
     }
 
 }
+
+
+
+// https://meetingsapac29.webex.com/meetingsapac29/j.php?MTID=m169d90be45e1dc0edfea638f85383ed7

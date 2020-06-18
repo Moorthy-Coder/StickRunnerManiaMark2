@@ -18,7 +18,7 @@ class MapGenerator {
         }
     }
 
-    CollideHurd() {
+  /*  CollideHurd() {
         for (var i = 0; i < Hurdles.length; i++) {
             if (Player2.collide(topHurd)) {
                 topHurd.velocityX = -2;
@@ -30,7 +30,7 @@ class MapGenerator {
                 topHurd.velocityX = -5;
             }
         }
-    }
+    } */
 }
 
 /*
